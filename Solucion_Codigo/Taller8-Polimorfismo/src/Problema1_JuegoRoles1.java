@@ -6,36 +6,37 @@ public class Problema1_JuegoRoles1 {
     static Personaje arquero;
 
     public static void main(String[] args) {
-        guerrero = new Guerrero();
-        mago = new Mago();
+        guerrero = new Guerrero("Gigante", 3);
+        mago = new Mago("Invisible", 3);
+        arquero= new Arquero("Disparo rápido", 3);
         boolean gana = guerrero.ataque(mago);
         if (gana) {
             guerrero.experiencia += 1;
-            guerrero.batallasGanadas += 1;
+            guerrero.batallasGana += 1;
             mago.vidas -= 1;
-
         } else {
-            mago.batallasGanadas += 1;
             mago.experiencia += 1;
-            guerrero.vidas += 1;
+            mago.batallasGana += 1;
+            guerrero.vidas -= 1;
         }
-        System.out.println("Guerrero: "+guerrero+"Mago: "+mago);
+        System.out.println("GUERRRO: " + guerrero + " MAGO: " + mago);
     }
 }
 
 abstract class Personaje {
 
-    public int vidas;
-    public int experiencia;
-    public int batallasGanadas;
+    public int vidas, experiencia, batallasGana;
+
+    public Personaje(int vidas) {
+        this.vidas = vidas;
+    }
 
     public abstract boolean ataque(Personaje personaje);
 
     public abstract int defensa();
 
-    @Override
     public String toString() {
-        return "Personaje{" + "vidas=" + vidas + ", experiencia=" + experiencia + ", batallasGanadas=" + batallasGanadas + '}';
+        return "Personaje{" + "vidas=" + vidas + ", experiencia=" + experiencia + ", batallasGana=" + batallasGana + '}';
     }
 }
 
@@ -43,26 +44,35 @@ class Guerrero extends Personaje {
 
     public String habilidades;
 
+    public Guerrero(String habilidades, int vidas) {
+        super(vidas);
+        this.habilidades = habilidades;
+    }
+
     public boolean ataque(Personaje personaje) {
-        int bandera = (int) (Math.random() * 1);
-        boolean gana = (bandera == 1);
+        //return ((int) (Math.random() * 1) == 1) ? true : false;
+        int bandera = (int) (Math.random() * 2);
+        boolean gana = (bandera == 1) ? true : false;
         return gana;
     }
 
     public int defensa() {
         return 0;
-    
-        
-}
-
-    @Override
-    public String toString() {
-        return "Guerrero{" + "habilidades=" + habilidades + '}'+ super.toString();
     }
+
+    public String toString() {
+        return "Guerrero{" + "habilidades=" + habilidades + '}' + super.toString();
+    }
+}
 
 class Mago extends Personaje {
 
     public String estrategia;
+
+    public Mago(String estrategia, int vidas) {
+        super(vidas);
+        this.estrategia = estrategia;
+    }
 
     public boolean ataque(Personaje personaje) {
         return false;
@@ -71,18 +81,17 @@ class Mago extends Personaje {
     public int defensa() {
         return 0;
     }
-
-        @Override
-        public String toString() {
-            return "Mago{" + "estrategia=" + estrategia + '}'+ super.toString();
-        }
-    
 }
 
 class Arquero extends Personaje {
 
     public String atributo;
 
+    public Arquero(String atributo, int vidas) {
+        super(vidas);
+        this.atributo = atributo;
+    }
+
     public boolean ataque(Personaje personaje) {
         return false;
     }
@@ -90,5 +99,4 @@ class Arquero extends Personaje {
     public int defensa() {
         return 0;
     }
-}
 }
