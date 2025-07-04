@@ -4,14 +4,21 @@ public class Problema1_JuegoRoles{
     static Personaje a1;
     
     public static void main(String[] args) {
-        g1 = new Guerrero("Super fuerza", 3, 100);
-        m1 = new Mago("Fuego", 3, 50);
-        a1 = new Arquero("Disparo", 3, 30);
+        g1 = new Guerrero("Super fuerza", 100, 100);
+        m1 = new Mago("Fuego", 100, 50);
+        a1 = new Arquero("Disparo", 100, 30);
         boolean gana = g1.ataque(m1);
-        if(gana){
-            g1.defensa(m1);
+        if (gana) {
+            m1.defensa();
         } else {
-            m1.defensa(g1);
+            g1.defensa();
+        }
+
+        boolean gana2 = m1.ataque(g1);
+        if (gana2) {
+            g1.defensa();
+        } else {
+            m1.defensa();
         }
         
         System.out.println("Guerrero: " + g1 + "Mago: " + m1);
@@ -30,7 +37,7 @@ abstract class Personaje{
     }
     
     public abstract boolean ataque(Personaje personaje);
-    public abstract int defensa(Personaje personaje);
+    public abstract int defensa();
 
     @Override
     public String toString() {
@@ -51,9 +58,13 @@ class Guerrero extends Personaje{
         return (((Math.random()*2) == 1) ? true : false);
     }
     
-    public int defensa(Personaje personaje){
-        int defensa = puntosDefensa - (int)(Math.random()*10);
-        return 0;
+    public int defensa() {
+        if (puntosDefensa <= 15) {
+            vidas -= 1;
+        } else {
+            puntosDefensa -= (int)(Math.random() * 10);
+        }
+        return vidas;
     }
 
     public String toString() {
@@ -70,11 +81,17 @@ class Arquero extends Personaje{
     }
     
     public boolean ataque(Personaje personaje){
-        return true;
+        int bandera = (int) (Math.random()*2);
+        return (((Math.random()*2) == 1) ? true : false);
     }
     
-    public int defensa(){
-        return 0;
+    public int defensa() {
+        if (puntosDefensa <= 15) {
+            vidas -= 1;
+        } else {
+            puntosDefensa -= (int)(Math.random() * 10);
+        }
+        return vidas;
     }
 }
 
@@ -87,10 +104,21 @@ class Mago extends Personaje{
     }
     
     public boolean ataque(Personaje personaje){
-        return true;
+        int bandera = (int) (Math.random()*2);
+        return (((Math.random()*2) == 1) ? true : false);
     }
     
-    public int defensa(){
-        return 0;
+    public int defensa() {
+        if (puntosDefensa <= 15) {
+            vidas -= 1;
+        } else {
+            puntosDefensa -= (int)(Math.random() * 10);
+        }
+        return vidas;
+    }
+
+    @Override
+    public String toString() {
+        return "Mago{" + "atributo=" + atributo + '}' + super.toString();
     }
 }
