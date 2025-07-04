@@ -1,5 +1,5 @@
 
-public class Problema1_JuegoRoles1 {
+public class Problema1_JuegoRoles {
 
     static Personaje guerrero;
     static Personaje mago;
